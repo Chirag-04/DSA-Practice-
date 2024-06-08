@@ -9,7 +9,7 @@ public:
             if(i>=1 and (sum%k == 0)){
                 return true;
             } 
-            if(sum > k){
+            
             int diff = sum %k; // 29/6 -> 
             for(int num = diff ; num <sum ; num+=k){
                 if(m.count(num)) {
@@ -18,7 +18,7 @@ public:
                         return true;
                     }
                 }
-            }
+            
 
        }
            
