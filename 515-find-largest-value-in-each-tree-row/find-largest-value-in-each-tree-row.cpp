@@ -11,24 +11,20 @@
  */
 class Solution {
 public:
-    vector<int> largestValues(TreeNode* root) {
-        if(root == NULL) return {};
-        queue<TreeNode*>q;
-        q.push(root);
-        vector<int>ans;
-        while(!q.empty()){
-            int maxi = INT_MIN;
-            int sz = q.size();
-            for(int i=0; i <sz ; i++){
-                TreeNode* node = q.front();
-                q.pop();
-                maxi = max(maxi , node->val);
-                if(node->left) q.push(node->left);
-                if(node->right) q.push(node->right);
-            }
-            // int maxi =*max_element(temp.begin(),temp.end());
-            ans.push_back(maxi);
+    vector<int>ans;
+    void f(TreeNode* root , int level){
+        if(root == NULL) return ;
+        // when th level coming for the first time 
+        if(ans.size() == level){
+            ans.push_back(root->val);
+        }else{
+            ans[level] = max(ans[level] , root->val);
         }
+        f(root->left , level+1);
+        f(root->right ,level+1);
+    }
+    vector<int> largestValues(TreeNode* root) {
+        f(root , 0);
         return ans ;
     }
 };
