@@ -11,20 +11,19 @@
  */
 class Solution {
 public:
+// brute force is fine
+   int maxi=0;
     int height(TreeNode* root){
         if(root==NULL) return 0;
         int lh  = height(root->left);
         int rh  = height(root->right);
+        maxi =  max(maxi , lh+rh);
         return 1+max(lh , rh );
     }
-    int maxi=0;
+    
     int diameterOfBinaryTree(TreeNode* root) {
         if(root==NULL)return 0;
-        int left_h =  height(root->left);
-        int right_h =  height(root->right);
-        maxi = max(maxi , left_h +  right_h);
-        diameterOfBinaryTree(root->left);
-        diameterOfBinaryTree(root->right);
+        height(root);
         return maxi;
     }
 };
