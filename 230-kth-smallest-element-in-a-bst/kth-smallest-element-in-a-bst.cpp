@@ -12,15 +12,26 @@
 class Solution {
 public:
     // method 1 :
-    vector<int>inorder;
-    void f(TreeNode* root ){
+    // method 2 : we can optimize the space here
+    // since we do not need all the element 
+    // vector<int>inorder;
+    int ans  = -1; 
+    int ct  = 1;
+    void f(TreeNode* root , int k){
         if(root== NULL) return;
-        f(root->left);
-        inorder.push_back(root->val);
-        f(root->right);
+        f(root->left , k);
+        // inorder.push_back(root->val);
+        cout<<ct<<" "<<root->val<<endl;
+        if(ct == k){
+            ans = root->val;
+             ct++;
+            return;
+        }
+        ct++;
+        f(root->right , k);
     }
     int kthSmallest(TreeNode* root, int k) {
-        f(root);
-        return inorder[k-1];
+        f(root , k);
+        return ans;
     }
 };
