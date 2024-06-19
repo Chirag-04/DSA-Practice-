@@ -24,7 +24,6 @@ public:
         cout<<ct<<" "<<root->val<<endl;
         if(ct == k){
             ans = root->val;
-             ct++;
         }
         ct++;
         f(root->right , k);
