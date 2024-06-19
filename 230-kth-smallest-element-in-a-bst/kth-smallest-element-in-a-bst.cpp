@@ -25,7 +25,6 @@ public:
         if(ct == k){
             ans = root->val;
              ct++;
-            return;
         }
         ct++;
         f(root->right , k);
