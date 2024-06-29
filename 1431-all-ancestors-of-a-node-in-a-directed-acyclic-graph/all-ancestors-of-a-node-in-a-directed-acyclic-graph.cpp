@@ -11,20 +11,23 @@ public:
     }
     vector<vector<int>> getAncestors(int n, vector<vector<int>>& edges) {
         vector<int>adj[n];
-        vector<vector<int>>ans;
+        vector<vector<int>>ans(n);
         for(auto it : edges){
             int a =  it[0];
             int b = it[1];
             // a->b
-            adj[b].push_back(a);
+            adj[a].push_back(b);
         }
         // i have to rull a loop on component
         for(int i=0 ; i<n ; i++){
             vector<int>temp;
             vector<int>vis(n);
             dfs(i , vis , temp  , adj);
-            sort(temp.begin() , temp.end());
-            ans.push_back(temp);
+            cout<<i<<" ";
+            for(int j=0 ; j<temp.size() ; j++){
+                ans[temp[j]].push_back(i);
+            }
+          
         }
 
         return ans ;
