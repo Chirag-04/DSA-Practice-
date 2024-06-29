@@ -4,16 +4,16 @@ public:
     int minimumEffortPath(vector<vector<int>>& heights) {
         int n = heights.size();
         int m = heights[0].size();
-        priority_queue<PPI , vector<PPI> , greater<PPI>>pq;
+        queue<PPI>pq;
         pq.push({0  , {0 , 0}});
         int delr[4] = {-1 , 0 , 1 , 0};
         int delc[4] = {0  , 1  , 0 , -1};
         vector<vector<int>>path(n , vector<int>(m , 1e9));
         path[0][0] = 0 ;
         while(!pq.empty()){
-            int dis = pq.top().first;
-            int r = pq.top().second.first;
-            int c=  pq.top().second.second;
+            int dis = pq.front().first;
+            int r = pq.front().second.first;
+            int c=  pq.front().second.second;
             pq.pop();
        for(int i=0 ; i<4 ; i++){
         int nr  =  r + delr[i];
