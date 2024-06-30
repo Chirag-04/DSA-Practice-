@@ -11,24 +11,38 @@
  */
 class Solution {
 public:
+    // inorer traversal in O(1)
+    //using morris traversal
+    // just check whether left node exist or not
+    //
     vector<int> inorderTraversal(TreeNode* root) {
-     vector<int>ans;
-     stack<TreeNode*>s;
-     TreeNode* node = root;
-     while(true){
-        if(node == NULL){
-            if(s.empty()) break;
-            TreeNode* ansNode = s.top();
-            s.pop();
-            ans.push_back(ansNode->val);
-            node = ansNode->right;
+        if(root == NULL) return {};
+        vector<int>ans;
+        while(root){
+            if(!root->left){
+                ans.push_back(root->val);
+                root=root->right;
+            }
+            else{
+                TreeNode* curr = root->left;
+                while(curr->right!=NULL and curr->right!=root){
+                    curr= curr->right;
+                }
+                // 
+                if(curr->right == NULL){
+                   curr->right = root;
+                   root = root->left; 
+                }
+                else{
+                    // left root traversed 
+                    // now it's time to push the root nod e
+                    curr->right = NULL;
+                    ans.push_back(root->val);
+                    root= root->right;
+                }
+            }
         }
-        else {
-            s.push(node);
-            node = node->left;
-        }
-     }
 
-     return ans ;   
+        return ans ;
     }
 };
