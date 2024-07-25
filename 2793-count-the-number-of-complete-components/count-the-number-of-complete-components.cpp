@@ -1,11 +1,15 @@
 class Solution {
 public:
-    void dfs(int start , vector<int>&vis , set<int>&s ,vector<int>adj[]){
-        s.insert(start);
+    void dfs(int start , vector<int>&vis ,vector<int>adj[]
+     , int&v , int&e){
+        // new vertex
+        v+=1;
         vis[start] = 1;
         for(auto it : adj[start]){
+            //  it will run for each child of a node 
+            e+=1;
             if(!vis[it]){
-                dfs(it , vis , s , adj);
+                dfs(it , vis , adj , v , e);
             }
         }
     }
@@ -23,15 +27,11 @@ public:
         for(int i=0 ; i<n ; i++){
 
             if(!vis[i]){
-                set<int>s;
-                dfs(i , vis ,s , adj);
-                int v = s.size();
-                cout<<"v"<<v<<endl;
+                // set<int>s;
+                int v =0;
                 int e = 0;
-                for(auto it: s){
-                    e+=adj[it].size();
-                }
-                cout<<"e"<<e<<endl;
+                dfs(i , vis ,adj , v , e);
+                cout<<i<<" "<<v<< " "<<e<<endl;
                 if(e == (v*(v-1))) ans++;
             }
         }
