@@ -1,43 +1,43 @@
 class Solution {
 public:
-    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
-         vector<vector<int>>dis(n , vector<int>(n ,INT_MAX));
-        
-        for(int i=0  ;i<n ; i++) dis[i][i] = 0; // imp
-        for(int i= 0 ;i<edges.size() ; i++){
-            int u = edges[i][0];
-            int v = edges[i][1];
-            int wt = edges[i][2];
-            dis[u][v] = wt;
-            dis[v][u] = wt;
+    int findTheCity(int n, vector<vector<int>>& edges, int threshold) {
+        // we can use floydd warshall algo
+        // as we can traverse from a->b or a->k->b
+        vector<vector<int>>store(n , vector<int>(n ,INT_MAX));
+        for(auto it: edges){
+            int a = it[0];
+            int b = it[1];
+            int wt =  it[2];
+            store[a][b] =  wt;
+            store[b][a] =  wt;
         }
-        
-        for(int via =0 ;via<n ;via++){
-            for(int i=0 ; i<n ; i++){
-                for(int j= 0 ;j<n;j++){
-                     if(dis[i][via] !=INT_MAX and 
-                     dis[via][j]!=INT_MAX){
-                    dis[i][j] = min(dis[i][j] , 
-                    dis[i][via] + dis[via][j]);                        
-                     }
-
+        for(int i=0; i<n ;i++) store[i][i]= 0;
+        //
+        for(int via= 0 ;via<n ;via++){
+            for(int i=0; i <n ; i++){
+                for(int j=0; j<n ; j++){
+                    if(i == j) continue;
+                  if(store[i][via]!=INT_MAX and store[via][j]!=INT_MAX  )  
+                  store[i][j] = min(store[i][j] , store[i][via]+store[via][j]);
                 }
             }
         }
-        
         //
-        int ans  = n+1;
-        int res=-1;
-        for(int i=0 ; i< n ;i++){
-             int count = 0 ;
-            for(int j= 0 ; j<n ; j++){
-                if(dis[i][j]!=INT_MAX and dis[i][j]<=distanceThreshold) count++;
+        int mini =  INT_MAX;
+        int index =  -1;
+        for(int i=0; i <n ; i++){
+            int count = 0 ;
+            for(int j=0 ; j<n ; j++){
+                if(store[i][j]!=INT_MAX and store[i][j] <= threshold){
+                    count++;
+                }
             }
-            if(count <= ans){
-                ans = count ;
-                res = i;
+
+            if(count  <=  mini){
+                mini = count ;
+                index = i;
             }
         }
-         return res;
+        return index;
     }
 };
