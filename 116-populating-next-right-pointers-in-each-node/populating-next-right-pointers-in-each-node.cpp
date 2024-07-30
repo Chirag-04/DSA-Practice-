@@ -18,31 +18,21 @@ public:
 
 class Solution {
 public:
-   // we can make use of level orfer traversal
-    Node* connect(Node* root) {
-        if(root == NULL) return root;
-        queue<Node*>q;
-        q.push(root);
-        while(!q.empty()){
-            Node* temp =  q.front();
-            int sz = q.size();
-            bool firstNode = true;
-            for(int i=0; i <sz ; i++){
-                Node* newNode = q.front();
-                q.pop();
-                if(firstNode){
-                    firstNode= false;
-                }
-                else{
-                    temp->next =  newNode;
-                    temp = newNode;
-                }
-                if(newNode->left) q.push(newNode->left);
-                if(newNode->right) q.push(newNode->right);
-
-            }
-            temp->next == NULL;
+  // method 1 is simple we will use level order traversal 
+  // and if curr node is the first node then make it temp node 
+  // but if curr node is not the first node then start making connection
+  //method 2 we can use dfs 
+    void f(Node* root){
+        if(root == NULL or (!root->left and !root->right)) return ;
+        root->left->next = root->right;
+        if(root->next){
+            root->right->next = root->next->left;
         }
-        return root;
+        f(root->left);
+        f(root->right);
+    }
+    Node* connect(Node* root) {
+         f(root);
+         return root;
     }
 };
