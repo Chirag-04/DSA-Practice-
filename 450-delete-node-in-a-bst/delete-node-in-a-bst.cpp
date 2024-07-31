@@ -11,23 +11,29 @@
  */
 class Solution {
 public:
-    
-    
     TreeNode* deleteNode(TreeNode* root, int key) {
-            if(!root)  return NULL;
-            if(key < root->val) root->left = deleteNode(root->left, key);     //We frecursively call the function until we find the target node
-            else if(key > root->val) root->right = deleteNode(root->right, key);       
-            else{
-                if(!root->left && !root->right) return NULL;          //No child condition
-                if (!root->left || !root->right)
-                    return root->left ? root->left : root->right;    //One child contion -> replace the node with it's child
-					                                                //Two child condition   
-                TreeNode* temp = root->left;                        //(or) TreeNode *temp = root->right;
-                while(temp->right != NULL) temp = temp->right;     //      while(temp->left != NULL) temp = temp->left;
-                root->val = temp->val;                            //       root->val = temp->val;
-                root->left = deleteNode(root->left, temp->val);  //        root->right = deleteNode(root->right, temp);		
+        if(root == NULL) return root;
+        if(root->val > key){
+            root->left = deleteNode(root->left , key);
+        }else if(root->val < key){
+            root->right = deleteNode(root->right , key);
+        }else{
+            // now i will check number of children of it 
+            // on the basis of that i will be able to return the node 
+            if(root->left !=NULL and root->right!= NULL){
+                TreeNode*temp = root->left;
+                while(temp->right) temp= temp->right;
+                root->val = temp->val;
+                root->left =deleteNode(root->left , temp->val);
+                return root;
+            }else if(root->left){
+                return root->left;
+            }else if(root->right){
+                return root->right;
+            }else{
+                return NULL;
             }
+        }
         return root;
-    } 
-
+    }
 };
