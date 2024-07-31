@@ -11,17 +11,19 @@
  */
 class Solution {
 public:
-    unordered_map<int,int>m; // all values are unique 
-    bool find(TreeNode* root  , int k){
+// approach 1 is to use the inorder prop of the bst 
+// apprah 2 is to use the hahsmap 
+    bool f(TreeNode* root , int k , unordered_map<int,int>&m){
         if(root == NULL) return false;
-        if(m.find(k-root->val) !=m.end()){
+        if(m.find(k- root->val) != m.end()){
             return true;
         }else m[root->val]++;
-        bool check1 = find(root->left , k);
-        bool check2 = find(root->right , k);
-        return (check1|check2);
+        bool check1 =  f(root->left , k , m);
+        bool check2 =  f(root->right , k  , m);
+        return check1|check2;
     }
     bool findTarget(TreeNode* root, int k) {
-        return find(root , k);
+        unordered_map<int,int>m;
+        return f(root , k , m);
     }
 };
