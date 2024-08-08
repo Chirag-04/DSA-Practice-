@@ -5,26 +5,19 @@ public:
         int total =1 ;
         vector<vector<int>>ans;
         ans.push_back({i , j});
-         if(total == count ) return ans;
+        if(total == count ) return ans;
         int x = 1;
         while(1){
-            // cout<<"x"<<x<<" "<<i<<" "<<j<<endl;
             int right =  x , down =x , left = x+1 , up = x+1;
-            bool check = false;
             int r = j;
             while(right--){
                 r= r+1;
-                //  cout<<i<<" "<<r<<endl; 
                if(i>=0 and i<n and r>=0 and r<m) {
-             total++;  
+               total++;  
              ans.push_back({i , r});
-              if(total == count ) {
-                check = 1;
-                break;
-              }
+              if(total == count )return ans;
                }
             }
-            if(check) break;
             j = r;
             int d = i;
             while(down--){
@@ -33,13 +26,9 @@ public:
                 if(d>=0 and d<n and j>=0 and j<m) {
                 total++; 
                 ans.push_back({d , j});
-               if(total == count ) {
-                check = 1;
-                break;
-              }
+               if(total == count ) return ans ;
                 }
             }
-               if(check) break;
             i = d;
             int l = j;
             while(left--){
@@ -49,13 +38,10 @@ public:
              total++; 
 
              ans.push_back({i , l}); 
-             if(total == count ) {
-                check = 1;
-                break;
-              } 
+             if(total == count )return ans; 
               }
             }
-               if(check) break;
+
             j= l;
             int u =  i;
             while(up--){
@@ -65,17 +51,13 @@ public:
                 total++; 
 
                 ans.push_back({u , j}); 
-                if(total == count ) {
-                check = 1;
-                break;
-              }  
+                if(total == count )return ans;
                 }
-            }
-               if(check) break;
+            }    
             i= u;
             x=x+2;
         }
-        cout<<i<<" "<<j<<endl;
+       
         return ans ;
     }
 };
