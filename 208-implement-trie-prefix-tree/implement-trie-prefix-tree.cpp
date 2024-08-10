@@ -69,8 +69,7 @@ public:
             crawler =   crawler->children[idx] ;
         }
         // at last at the end of word
-       if( i == word.size()) return true;
-       return false;
+      return true;
     }
 };
 
