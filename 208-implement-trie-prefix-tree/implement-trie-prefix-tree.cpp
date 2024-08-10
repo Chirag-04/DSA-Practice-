@@ -1,6 +1,5 @@
-class Trie {
-public:
-    struct trieNode{
+   class trieNode{
+    public: 
         bool isEndofWord ;
         trieNode* children[26];
         public:
@@ -8,13 +7,16 @@ public:
             this->isEndofWord = false;
             for(int i=0 ; i<26 ; i++){
             this->children[i] = NULL;
-             }
+            }
         }
     };
     trieNode* getNode(){
         trieNode* newNode =  new trieNode();
         return newNode;
     }
+class Trie {
+public:
+    
     trieNode* root;
     Trie() {
         root =  getNode();
@@ -50,7 +52,7 @@ public:
             crawler =   crawler->children[idx] ;
         }
         // at last at the end of word
-       if(crawler != NULL and crawler-> isEndofWord == true) return true;
+       if(crawler-> isEndofWord == true) return true;
        return false;
     }
     
