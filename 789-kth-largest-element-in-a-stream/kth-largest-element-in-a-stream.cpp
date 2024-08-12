@@ -1,19 +1,24 @@
 class KthLargest {
 public:
-    // kth largest 
+// since we need the kth largest element everytie 
+// so we can either go gor min or max queue
+// but we will take max queue
+// cuz we wkill take max queue then i will lose all the k-1 large element
+// and it possible the i need them in future 
+// so i need to preserve the max elements
     int K;
-     priority_queue<int , vector<int> , greater<int>> pq;
-    KthLargest(int k, vector<int>& nums) { // parametrized constructor 
-        K = k; //
-        for(int i=0 ; i<nums.size() ; i++){
-            pq.push(nums[i]);
+    priority_queue<int,vector<int> , greater<int>>pq;
+    KthLargest(int k, vector<int>& nums) {
+        K = k;
+        for(auto it : nums){
+            pq.push(it);
         }
     }
     
     int add(int val) {
         pq.push(val);
-        while(pq.size()!=K) pq.pop();
-         return  pq.top();
+        while(pq.size()!=K ) pq.pop();
+        return pq.top();  
     }
 };
 
