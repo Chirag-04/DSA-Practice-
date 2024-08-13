@@ -1,31 +1,36 @@
 class Solution {
 public:
     vector<string> findAllRecipes(vector<string>& recipes, vector<vector<string>>& ingredients, vector<string>& supplies) {
-        unordered_set<string>s;
-        for(auto it : supplies) s.insert(it);
+        // more intuitive way of solving this is using graph 
+        // as there is something before something pattern
+        // so lets create the graph 
+        unordered_map<string,int>inDegree;
+        unordered_map<string  , vector<string>>adj; // for a reciepes all the ind require d
+        for(int i=0 ; i<recipes.size() ; i++){
+            string dish =  recipes[i];
+            for(int j=0 ; j <ingredients[i].size() ; j++){
+                // now for dish i need ingredients first 
+                // it means edge from 
+                string req =  ingredients[i][j];
+                adj[req].push_back(dish);
+                inDegree[dish]++;
+            }
+        }
+        // now simple bfs traversal
         vector<string>ans;
-        // we will stop when all teh items that could be made are present in set oly
-        bool finalCheck = true;
-        while(finalCheck){
-            // lets iterate over the recipes
-            finalCheck = false;
-            for(int i =0 ; i <recipes.size(); i++){
-                // for second or further pass i need to check all the ing again 
-                if(s.contains(recipes[i])) continue;
-                //it will directly get returned from here 
-                // i will check wehtehr i will be able to create the dish or not 
-                bool allPresent = true;
-                for(auto it : ingredients[i]){
-                    string req =  it;
-                    if(!s.contains(req)){
-                        allPresent = false;
-                    }
-                }
-                // if allPresent is false it measn i wont be able to make right now 
-                if(allPresent){
-                    finalCheck = true;
-                    ans.push_back(recipes[i]);
-                    s.insert(recipes[i]);
+        queue<string>q;
+        for(auto it : supplies){
+            q.push(it);
+        }
+        // 
+        while(!q.empty()){
+            string str = q.front();
+            q.pop();
+            for(auto it: adj[str]){
+                inDegree[it]--;
+                if(inDegree[it] == 0){
+                    ans.push_back(it);
+                    q.push(it);
                 }
             }
         }
